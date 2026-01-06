@@ -18,6 +18,12 @@
   </ul>
 
   <!-- Chart -->
+  <style>
+    /* Ensure filters dropdown is above the chart */
+    .drop {
+      z-index: 2000 !important;
+    }
+  </style>
   <section class="chart-wrapper">
     <div class="chart is-events">
       <canvas id="chart-events"></canvas>
