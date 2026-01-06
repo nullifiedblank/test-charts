@@ -589,7 +589,7 @@ document.addEventListener('DOMContentLoaded', () => {
       document
         .querySelectorAll('[data-chart-filters="events"] .drop-main input[type="checkbox"]').forEach((cb) => {
           const idx = chart.data.datasets.findIndex(
-            (ds) => ds.label === cb.name
+            (ds) => (ds._filterName || ds.label) === cb.name
           );
           if (idx !== -1) {
             chart.setDatasetVisibility(idx, cb.checked);
