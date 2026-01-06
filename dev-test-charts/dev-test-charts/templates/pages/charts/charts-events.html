@@ -122,11 +122,40 @@
         plugins: {
           legend: {
             position: 'bottom',
+            labels: {
+              filter: function(item, chart) {
+                // Only show datasets that are not hidden
+                // item.hidden is true if the dataset is hidden
+                return !item.hidden;
+              }
+            }
           }
         },
         scales: {
           y: {
             beginAtZero: true
+          }
+        },
+        transitions: {
+          show: {
+            animations: {
+              x: {
+                from: 0
+              },
+              y: {
+                from: 0
+              }
+            }
+          },
+          hide: {
+            animations: {
+              x: {
+                to: 0
+              },
+              y: {
+                to: 0
+              }
+            }
           }
         }
       }
