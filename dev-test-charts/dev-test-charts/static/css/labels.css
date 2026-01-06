@@ -1,0 +1,113 @@
+.label {
+  padding: 3px 9px 2px;
+  background-color: var(--color-blue-300);
+  border-radius: 5px;
+  color: var(--color-white);
+  font-style: normal;
+  font-weight: 500;
+  font-size: 13px;
+  line-height: 16px;
+  color: #FFFFFF;
+  opacity: 0.9;
+  display: inline-block;
+}
+
+.label + .label {
+  margin-left: 6px;
+}
+
+.label.gray {
+  background-color: var(--color-gray-104);
+}
+
+.label.blue {
+  background-color: var(--color-blue-300);
+}
+
+.label.red {
+  background-color: var(--color-red-300);
+}
+
+.label.teal {
+  background-color: var(--color-teal-300);
+}
+
+.label.yellow {
+  background-color: var(--color-yellow-300);
+}
+
+.label.green {
+  background-color: var(--color-green-300);
+}
+
+.label.slate {
+  background-color: var(--color-slate-300);
+}
+
+.label.burgundy {
+  background-color: var(--color-burgundy-300);
+}
+
+.label.mustard {
+  background-color: var(--color-mustard-300);
+}
+
+.label.purple {
+  background-color: var(--color-purple-300);
+}
+
+@media (max-width: 767px) {
+  .label-event {
+    padding: 3px 9px 2px;
+    background-color: var(--color-blue-300);
+    border-radius: 5px;
+    color: var(--color-white);
+    font-style: normal;
+    font-weight: 500;
+    font-size: 13px;
+    line-height: 16px;
+    color: #FFFFFF;
+    opacity: 0.9;
+    display: inline-block;
+  }
+  
+  .label-event.gray {
+    background-color: var(--color-gray-104);
+  }
+  
+  .label-event.blue {
+    background-color: var(--color-blue-300);
+  }
+  
+  .label-event.red {
+    background-color: var(--color-red-300);
+  }
+  
+  .label-event.teal {
+    background-color: var(--color-teal-300);
+  }
+  
+  .label-event.yellow {
+    background-color: var(--color-yellow-300);
+  }
+  
+  .label-event.green {
+    background-color: var(--color-green-300);
+  }
+  
+  .label-event.slate {
+    background-color: var(--color-slate-300);
+  }
+  
+  .label-event.burgundy {
+    background-color: var(--color-burgundy-300);
+  }
+  
+  .label-event.mustard {
+    background-color: var(--color-mustard-300);
+  }
+  
+  .label-event.purple {
+    background-color: var(--color-purple-300);
+  }
+}

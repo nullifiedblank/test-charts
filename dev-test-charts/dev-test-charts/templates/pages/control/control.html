@@ -1,0 +1,23 @@
+<main>
+  <section id="title">
+    <h1>Charts</h1>
+    <p>Track your email performance over time, with filters for events, users, and subaccounts, plus geographic and client breakdowns.</p>
+  </section>
+
+  <article id="list" class="panel">
+    <!-- Panel header -->
+    <header class="panel-header">
+      <ul class="panel-header-primary">
+        <li hx-get="templates/pages/charts/charts-events.html" hx-trigger="click" hx-target=".panel-content" hx-swap="outerHTML" data-tab="open"><h2>Events</h2></li>
+        <li hx-get="templates/pages/charts/charts-subaccounts.html" hx-trigger="click" hx-target=".panel-content" hx-swap="outerHTML" data-tab="closed"><h2>Per subaccount</h2></li>
+        <li hx-get="templates/pages/charts/charts-users.html" hx-trigger="click" hx-target=".panel-content" hx-swap="outerHTML" data-tab="closed"><h2>Per user</h2></li>
+        <li hx-get="templates/pages/charts/charts-demographics.html" hx-trigger="click" hx-target=".panel-content" hx-swap="outerHTML" data-tab="closed"><h2>Demographics</h2></li>
+      </ul>
+    </header>
+
+    <section class="panel-content" hx-get="templates/pages/charts/charts-events.html" hx-trigger="load" hx-swap="outerHTML">
+    </section>
+
+  </article>
+
+</main>

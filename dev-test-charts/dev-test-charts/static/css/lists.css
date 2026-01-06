@@ -1,0 +1,344 @@
+/* Lists */
+/* Table rows */
+.list>ul {
+  font-style: normal;
+  font-weight: 400;
+  font-size: 15px;
+  line-height: 19px;
+  color: var(--color-gray-106);
+}
+
+/* Clickable data */
+.list>ul li strong {
+  color: var(--color-blue-301);
+  cursor: pointer;
+}
+
+@media (max-width: 767px) {
+
+  /* Label data up on mobile where there's no header row */
+  li[data-label="to"]:before {
+    content: "To: "
+  }
+
+  li[data-label="status"]:before {
+    content: "Status: "
+  }
+
+  li[data-label="date"]:before {
+    content: "Date: "
+  }
+
+  li[data-label="from"]:before {
+    content: "From: "
+  }
+
+  li[data-label="info"]:before {
+    content: "Info: "
+  }
+
+  li[data-label="bounces"]:before {
+    content: "Bounces: "
+  }
+
+  li[data-label="spam"]:before {
+    content: "Spam: "
+  }
+
+  li[data-label="rejects"]:before {
+    content: "Rejects: "
+  }
+
+  li[data-label="unsubscribes"]:before {
+    content: "Unsubscribes: "
+  }
+
+  li[data-label="opens"]:before {
+    content: "Opens: "
+  }
+
+  li[data-label="clicks"]:before {
+    content: "Clicks: "
+  }
+
+  li[data-label="size"]:before {
+    content: "Size: "
+  }
+
+  li[data-label="sent"]:before {
+    content: "Sent: "
+  }
+
+  /* Odd/even pattern */
+  .list>ul:nth-child(2n - 1) {
+    background: var(--color-gray-100);
+  }
+
+  /* Breathing room between items */
+  .list ul {
+    padding: 10px 18px;
+    position: relative;
+  }
+
+  /* Extra padding at the top if there's a primary row */
+  .list ul:has([data-label="primary"]) {
+    padding-top: 32px;
+  }
+
+  /* Extra padding at the bottom if there's a tertiary row */
+  .list ul:has([data-label="tertiary"]) {
+    padding-bottom: 37px;
+  }
+
+  /* Hide the table’s header row */
+  .list>ul:nth-child(1) {
+    display: none
+  }
+
+  /* Define the top-left of the 'main row' in each item */
+  li[data-label="primary"] {
+    white-space: nowrap;
+    position: absolute;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    top: 10px;
+    width: calc(100% - 120px);
+    font-weight: 500;
+    color: var(--color-gray-108);
+  }
+
+  /* Define the top-right of the 'main row' in each item */
+  li[data-label="secondary"] {
+    white-space: nowrap;
+    position: absolute;
+    text-align: right;
+    top: 10px;
+    right: 18px;
+    width: 30%;
+    color: var(--color-gray-105);
+  }
+
+  /* Define the special bottom row of the 'main row' in each item */
+  li[data-label="tertiary"] {
+    white-space: nowrap;
+    position: absolute;
+    bottom: 10px;
+  }
+}
+
+@media (min-width: 768px) {
+
+  /* Odd/even pattern */
+  .list>ul:nth-child(2n)>li {
+    background: var(--color-gray-100);
+  }
+
+  /* List parent to make scrolling work
+   * Less code required doing it this way */
+  .list-wrapper {
+    overflow-x: auto
+  }
+
+  .list-wrapper * {
+    white-space: nowrap
+  }
+
+  .list-wrapper:last-child ul:last-child li:first-child {
+    border-radius: 0 0 0 10px
+  }
+
+  .list-wrapper:last-child ul:last-child li:last-child {
+    border-radius: 0 0 10px 0
+  }
+
+  /* The list group itself
+   * Make the parent div (list) and children (ul, li)
+   * behave like a good old-fashioned table */
+  .list {
+    display: table;
+    white-space: nowrap;
+    width: 100%;
+  }
+
+  .list::-webkit-scrollbar {
+    display: none
+  }
+
+  .list>ul {
+    display: table-row
+  }
+
+  /* Table header row */
+  .list>ul:first-child {
+    font-weight: 500;
+    color: var(--app-color-header);
+  }
+
+  /* Table cells */
+  .list>ul>li {
+    height: 40px;
+    padding: 10px;
+    display: table-cell;
+    white-space: nowrap;
+    vertical-align: middle;
+  }
+
+  /* Proper panel indentation */
+  .list>ul>li:first-child {
+    padding-left: 18px
+  }
+
+  /* Give the last column of each row a left border if
+   * it contains something (ie a dropdown or whatnot)
+   * otherwise have no left border */
+  .list>ul:has(li:last-child:not(:empty))>li:last-child {
+    padding: 10px 18px;
+    width: 40px;
+    height: 40px;
+    border-left: 1px solid var(--color-gray-101);
+  }
+
+  .list>ul>li:last-child .drop {
+    right: 10px;
+  }
+
+  /* For checkboxes, tuck them in so they're tight to the first field */
+  .list>ul>li:first-child:has(input) {
+    padding-right: 0;
+    width: 33px;
+  }
+}
+
+/* No data
+ * If there's no data, say so automagically! */
+.list-wrapper:not(:has(.list > ul:nth-child(2))):after {
+  content: 'No data to display';
+  display: block;
+  width: 100%;
+  padding: 130px 18px;
+  box-sizing: border-box;
+  text-align: center;
+  border-top: 1px solid var(--color-gray-101);
+  font-style: normal;
+  font-weight: 400;
+  font-size: 15px;
+  line-height: 19px;
+  color: var(--color-gray-106);
+}
+
+/* Coderows
+ * This is literally outputting a block of code as a row in panel-content */
+ .code-wrapper {
+  max-height: calc(100vh - 320px);
+  overflow-x: auto;
+}
+
+/* Make sure it scrolls horizontally if anything is massive */
+.code-wrapper pre {
+  overflow-x: auto;
+  margin: 0 5px;
+}
+
+/* Give it pretty type */
+.code-wrapper code {
+  font-family: var(--font-code);
+  font-size: 13px;
+  color: var(--color-gray-108);
+  line-height: 1.3;
+  display: block;
+  white-space: pre-wrap;
+  word-break: break-all;
+}
+
+/* Make it wrap like a div on small screens */
+@media (max-width: 767px) {
+
+  .code-wrapper code {
+    white-space: normal;
+    word-wrap: break-word;
+    padding: 18px;
+  }
+}
+
+.preview {
+  background: var(--color-white);
+  border: 1px solid var(--color-gray-102);
+  box-shadow: 0px 1px 1px #BECFD9, 0px 3px 5px #DEE8EE, inset 0px -1px 0px var(--color-gray-100);
+  border-radius: 10px;
+  max-width: 700px;
+  margin: 18px auto;
+  overflow: hidden;
+}
+
+.preview>img {
+  vertical-align: bottom;
+}
+
+/* Datarows
+ * This is for outputting a 2-col list of label:data info in panel-content */
+
+.datarows {
+  display: table;
+  white-space: nowrap;
+  width: 100%;
+  padding: 0 18px;
+}
+
+.datarows>li {
+  display: table-row;
+}
+
+.datarows>li>* {
+  height: 40px;
+  padding: 10px 0;
+  display: table-cell;
+  white-space: nowrap;
+  vertical-align: middle;
+  border-bottom: 1px solid var(--color-gray-102);
+  color: var(--color-gray-106);
+  font-style: normal;
+  font-weight: 400;
+  font-size: 15px;
+  line-height: 19px;
+}
+
+.datarows>li:last-child>* {
+  border-bottom: none;
+}
+
+/* Make the first column the header one, and make it as small as it can be */
+.datarows>li>*:nth-child(1) {
+  color: var(--app-color-header);
+  font-weight: 500;
+  width: 1px;
+  padding-right: 30px;
+}
+
+/* If there's a div in there, it means we've got a few things going inside
+ * a single column. So give them a little bit of breathing space! */
+.datarows>li>div>* {
+  margin-bottom: 5px
+}
+
+.datarows>li>div>*:last-child {
+  margin-bottom: 0
+}
+
+/* Optional footer row at the bottom of a list (not a panel-footer)*/
+ul[data-role="total"] {
+  font-style: normal;
+  font-weight: 400;
+  font-size: 15px;
+  line-height: 19px;
+  color: #5C697C;
+}
+
+@media (min-width: 768px) {
+  
+    ul[data-role="total"] li {
+    background: var(--color-gray-100);
+    border-top: 1px solid #DEE8EE;
+    padding-top: 15px;
+    padding-bottom: 15px;
+  }
+}

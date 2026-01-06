@@ -1,0 +1,41 @@
+/* helper classes to hide content in certain situations */
+.is-hidden {
+  display: none;
+}
+
+.is-invisible {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.is-disabled {
+  pointer-events: none;
+  opacity: 0.25 !important;
+}
+
+@media (max-width: 767px) {
+  
+  .mobile-hide {
+    display: none;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 999px) {
+  
+  .tablet-hide {
+    display: none;
+  }
+}
+
+@media (min-width: 1000px) {
+  
+  .desktop-hide {
+    display: none;
+  }
+}
+
+/* text alignment helpers */
+.text-right {
+  text-align: right;
+}

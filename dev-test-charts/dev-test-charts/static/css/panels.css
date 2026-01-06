@@ -1,0 +1,388 @@
+/* Panels */
+/* The main panel (the white boxes that things go in */
+.panel {
+  width: 100%;
+  background: var(--color-white);
+  border: 1px solid var(--color-gray-102);
+  box-shadow: 0px 1px 1px #BECFD9, 0px 3px 5px #DEE8EE, inset 0px -1px 0px var(--color-gray-100);
+  border-radius: 10px;
+}
+
+@media (max-width: 767px) {
+
+  .panel {
+    width: calc(100% + 50px);
+    margin-left: -25px;
+    margin-right: -25px;
+    border-left: none;
+    border-right: none;
+    border-radius: 0;
+  }
+}
+
+/* Optional header row at the top */
+.panel-header {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0px 18px;
+  gap: 18px;
+  position: relative;
+  z-index: 15;
+  border-bottom: 1px solid var(--color-gray-102);
+}
+
+@media (max-width: 767px) {
+
+  .panel-header * {
+    white-space: nowrap
+  }
+}
+
+/* Primary is the left side, secondary is the optional right */
+.panel-header-primary,
+.panel-header-secondary {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  padding: 0px;
+  gap: 18px;
+}
+
+.panel-header-primary {
+  height: 62px;
+  overflow-y: hidden;
+}
+
+.panel-header-secondary {
+  padding: 14px 0px 15px;
+  gap: 14px;
+}
+
+.panel-header-primary,
+.panel-header-secondary {
+  margin-bottom: -1px;
+}
+
+@media (max-width: 767px) {
+
+  #stats + #list .panel-header-primary,
+  #stats + #list .panel-header-secondary {
+    margin-bottom: -2px;
+  }
+
+  /* .has-options .panel-header-secondary {
+    margin-right: 48px;
+  } */
+}
+
+.panel-header-secondary li {
+  position: relative;
+}
+
+/* Main panel title */
+.panel-header-primary h2 {
+  font-style: normal;
+  font-weight: 500;
+  font-size: 17px;
+  line-height: 21px;
+  white-space: nowrap;
+  color: var(--color-gray-108);
+  height: 63px;
+  padding-top: 21px;
+}
+.panel-header-primary h2 .title-note {
+  color: var(--color-gray-105);
+}
+
+/* If there are 2+ titles, that means tabs 
+ * So prepare the tabs! */
+.panel-header-primary:has(li:nth-child(2)) li {
+  margin-bottom: -1px;
+  transition: .1s all ease-in-out;
+  border-bottom: 0 solid var(--color-blue-300);
+}
+
+.panel-header-primary:has(li:nth-child(2)) h2 {
+  transition: .1s all ease-in-out;
+  cursor: pointer;
+}
+
+/* Active tab header */
+.panel-header-primary:has(li:nth-child(2)) [data-tab="open"] {
+  border-bottom-width: 2px;
+  height: 62px;
+}
+
+/* Inactive tab header */
+.panel-header-primary:has(li:nth-child(2)) [data-tab="closed"] h2 {
+  color: var(--color-gray-105);
+}
+
+/* Optional footer row at the bottom 
+ commenting out for the demo
+.panel-floater, */
+.panel-footer {
+  padding: 15px 18px;
+  gap: 14px;
+  background: var(--color-gray-100);
+  border-top: 1px solid #DEE8EE;
+  border-radius: 0 0 10px 10px;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 15px;
+  line-height: 19px;
+  color: #5C697C;
+}
+
+
+/* If the panel-floater is visible, don't round the footer corners.
+   * This ensures that it looks like it connects nicely with panel-floater.
+ commenting out for the demo 
+.panel:has(table > tbody > tr > td:nth-child(1) input:checked) .panel-footer {
+  border-radius: 0;
+}
+*/
+
+/* Hide the delete button if input is not checked */
+.panel:not(:has(table > tbody > tr > td:nth-child(1) input:checked)) .panel-footer .button.is-delete {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: all .2s ease-in-out;
+}
+
+/* show the delete button if input is checked */
+.panel:has(table > tbody > tr > td:nth-child(1) input:checked) .panel-footer .button.is-delete {
+  opacity: 1;
+  transition: all .2s ease-in-out;
+}
+
+@media (min-width: 768px) {
+
+  .panel-footer,
+  .panel-floater {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+  }
+}
+
+@media (max-width: 767px) {
+
+  .panel-footer {
+    border-radius: 0;
+  }
+}
+
+/* Primary is the left side, secondary is the optional right */
+.panel-footer-primary,
+.panel-footer-secondary,
+.panel-floater-primary,
+.panel-floater-secondary {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  padding: 0px;
+  gap: 14px;
+}
+
+/* On small screens where flex isn't (and primary/secondary
+     * stack instead), give a bit of padding at the top of
+     * the secondary piece so they aren't stuck together */
+@media (max-width: 767px) {
+
+  .panel-footer-secondary,
+  .panel-floater-secondary {
+    padding-top: 10px;
+  }
+}
+
+.panel-floater {
+  transition: .1s all ease-in-out;
+  max-height: 70px;
+  position: sticky;
+  bottom: 0;
+}
+
+/* Hide panel-floater unless something has a checkbox checked */
+.panel:not(:has(table > tbody > tr > td:nth-child(1) input:checked)) .panel-floater {
+  opacity: 0;
+  max-height: 0;
+  padding-top: 0;
+  padding-bottom: 0;
+  overflow: hidden;
+  border: none;
+}
+
+/* Ribbon
+ * The blue bar near the top of some list panels */
+.ribbon {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 14px 18px;
+  gap: 10px;
+  background: var(--color-blue-100);
+  border-bottom: 1px solid var(--color-gray-102);
+  overflow-x: auto;
+}
+
+.ribbon  * {
+  white-space: nowrap
+}
+
+.ribbon .search {
+  flex: auto;
+  display: flex;
+}
+
+.ribbon .search>input {
+  flex: auto;
+  min-width: 220px;
+}
+
+/* Text in the ribbon (e.g. "Data is in UTC timezone") */
+.ribbon>li:has(> p) {
+  width: 100%
+}
+
+.ribbon>li>p {
+  text-align: right;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 15px;
+  line-height: 19px;
+  text-align: right;
+  color: #808C9F;
+}
+
+/* FYI
+ * A small persistent notice below ribbons and above lists */
+.panel-fyi {
+  border-bottom: 1px solid #DEE8EE;
+  padding: 15px 18px;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 15px;
+  line-height: 19px;
+  color: #5C697C;
+}
+
+.panel-fyi a {
+  color: var(--color-blue-301)
+}
+
+.panel-content {
+  position: relative
+}
+
+@media (max-width: 767px) {
+
+  .panel-content {
+    overflow-x: clip;
+  }
+}
+
+/* Make Panels transition into view without JS or classes */
+.panel {
+  animation: panel-enter 0.25s
+}
+
+@keyframes panel-enter {
+  from {
+    opacity: 0;
+    transform: scale(0.99) translateY(1px)
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0)
+  }
+}
+
+/* Stubs on email viewers */
+.stub {
+  display: flex;
+  flex-direction: row;
+  /*flex-wrap: wrap;*/
+  align-items: flex-start;
+  padding: 18px;
+  gap: 14px;
+  background: #FFFFFF;
+  border-bottom: 1px solid #DEE8EE;
+  position: relative;
+}
+
+.stub-icon {
+  min-width: 45px;
+  width: 45px;
+  height: 45px;
+  background: #FFDDBF;
+  color: #C69060;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 27px;
+  line-height: 45px;
+  border-radius: 100px;
+  text-align: center;
+}
+
+.stub-sender {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 0px;
+  gap: 4px;
+}
+
+.stub-sender li:nth-child(1) {
+  font-style: normal;
+  font-weight: 500;
+  font-size: 15px;
+  line-height: 19px;
+  color: #38393E;
+}
+
+.stub-sender li:nth-child(1) span {
+  font-style: normal;
+  font-weight: 400;
+  font-size: 15px;
+  line-height: 19px;
+  color: #808C9F;
+}
+
+.stub-sender li:nth-child(2) {
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 18px;
+  color: #38393E;
+}
+
+.stub-sender li:nth-child(3) {
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 18px;
+  color: #808C9F;
+}
+
+.stub-sender li:nth-child(4) {
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 18px;
+  color: #808C9F;
+}
+
+@media (min-width: 768px) {
+  
+  .stub-sender li:nth-child(4) {
+    text-align: right;
+    position: absolute;
+    right: 18px;
+  }
+}

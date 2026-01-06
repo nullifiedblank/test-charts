@@ -1,0 +1,54 @@
+/* Page title section */
+
+#title {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 0px;
+}
+
+/* Page title */
+#title h1 {
+  font-style: normal;
+  font-weight: 700;
+  font-size: 32px;
+  line-height: 40px;
+  letter-spacing: -0.01em;
+  color: var(--app-color-header);
+}
+
+#title h1[data-icon="back"]:before {
+  cursor: pointer;
+  content: '';
+  display: inline-block;
+  width: 31px;
+  height: 31px;
+  background: #FFFFFF url('/static/images/icons/icon-is-left.svg') center 6px no-repeat;
+  border: 1px solid #BECFD9;
+  box-shadow: inset 0px -2px 0px #BECFD9;
+  border-radius: 4px;
+  text-indent: -999em;
+  overflow: hidden;
+  display: inline-block;
+  position: relative;
+  top: 5px;
+  margin-right: 10px;
+}
+
+#title h1[data-icon="back"]:hover:before {
+  border-color: var(--color-gray-104);
+  box-shadow: inset 0px -2px 0px var(--color-gray-104);
+}
+
+/* Body */
+#title p {
+  color: var(--color-gray-106);
+  margin-top: 5px;
+  max-width: 600px;
+}
+
+#title p a { 
+  color: var(--color-blue-301);
+  text-decoration: none;
+}

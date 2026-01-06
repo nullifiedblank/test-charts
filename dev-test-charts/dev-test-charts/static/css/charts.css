@@ -1,0 +1,52 @@
+.chart-wrapper {
+  padding: 18px 0 18px 5px;
+}
+
+.chart.is-dash {
+  height: calc(100vh - 380px);
+  margin-right: -3px;
+}
+
+.chart.is-events,
+.chart.is-subaccounts,
+.chart.is-users {
+  height: calc(100vh - 258px);
+}
+
+.chart-controls {
+  display: flex;
+  padding-left: 32px;
+  padding-right: 18px;
+  padding-bottom: 7px;
+  justify-content: space-between;
+}
+
+.chart-controls > div {
+  display: flex;
+}
+
+.chart-controls p {
+  color: var(--color-gray-105);
+  font-size: 14px;
+  font-weight: 400;
+}
+
+.chart-controls ul {
+  display: flex;
+  gap: 15px;
+  margin-left: 15px;
+}
+
+.chart-controls ul label {
+  color: var(--color-gray-106);
+  font-size: 14px;
+  line-height: normal;
+  position: relative;
+  top: -1px;
+}
+
+.chart-controls ul label input {
+  margin-right: 7px;
+  position: relative;
+  top: 2px;
+}

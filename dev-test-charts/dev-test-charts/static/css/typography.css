@@ -1,0 +1,21 @@
+p {
+  font-family: var(--font-body);
+  font-style: normal;
+  font-weight: var(--font-weight-normal);
+  font-size: 15px;
+  line-height: 19px;
+}
+
+a {
+  color: var(--color-blue-301);
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+.number-special {
+  font-family: 'Inter';
+  letter-spacing: 0.3px;
+}

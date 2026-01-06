@@ -1,0 +1,93 @@
+/* Forms */
+/* General stuff */
+
+small {
+  display: block;
+  font-size: 14px;
+  color: var(--color-gray-105);
+  line-height: 1.36;
+}
+
+/* The Add/Edit details form */
+.details-wrapper {
+  padding: 0 18px;
+  display: table;
+  width: 100%;
+}
+
+.details-group {
+  display: table-row;
+}
+
+.details-group:not(:last-child) > *,
+.suppression-entry:not(:last-child) {
+  border-bottom: 1px solid var(--color-gray-102);
+}
+
+.suppression-entry:last-child {
+  padding-bottom: 0;
+}
+
+.details-group > label,
+.details-group > .details-group-control {
+  display: table-cell;
+  vertical-align: top;
+}
+
+.details-group > label {
+  color: var(--app-color-header);
+  font-weight: 500;
+  white-space: nowrap;  
+  padding: 26px 30px 10px 0;
+}
+
+.details-group label:has(+ .details-group-control > select),
+.details-group label:has(+ .details-group-control > input[type="text"]),
+.details-group label:has(+ .details-group-control > .tags) {
+  padding-top: 28px;
+}
+
+.details-group label:has(+ .details-group-control > .button.is-dropdown) {
+  padding-top: 29px;
+}
+
+.details-group-control,
+.suppression-entry {
+  width: 100%;
+  padding: 20px 0;
+}
+
+.details-group-control input[type="text"] {
+  width: 100%;
+}
+
+.details-group-control small {
+  margin-top: 5px;
+}
+
+.suppression-entry {
+  display: flex;
+  justify-content: flex-start;
+  align-items: stretch;
+  flex-wrap: nowrap;
+  gap: 10px;
+}
+
+.suppression-entry input:first-child {
+  min-width: 240px;
+}
+
+.suppression-entry input:not(:first-child) {
+  flex-grow: 1;
+}
+
+@media (max-width: 540px) {
+
+  .suppression-entry {
+    flex-wrap: wrap;
+  }
+  
+  .suppression-entry input:first-child {
+    width: 100%;
+  }
+}

@@ -1,0 +1,47 @@
+/* Icons */
+
+.icon-client {
+  width: 22px;
+  height: 22px;
+  position: absolute;
+  left: 18px;
+  top: 9px;
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+
+.icon-client + span::after {
+  display: none;
+}
+
+.icon-client.is-other {
+  background-image: url('/static/images/icons/icon-client-default.webp');
+}
+
+.icon-client.is-chrome {
+  background-image: url('/static/images/icons/icon-client-chrome.webp'), url('/static/images/icons/icon-client-default.webp');
+}
+
+.icon-client.is-safari {
+  background-image: url('/static/images/icons/icon-client-safari.webp'), url('/static/images/icons/icon-client-default.webp');
+}
+
+.icon-client.is-outlook {
+  background-image: url('/static/images/icons/icon-client-outlook.webp'), url('/static/images/icons/icon-client-default.webp');
+}
+
+.icon-client.is-hotmail {
+  background-image: url('/static/images/icons/icon-client-hotmail.webp'), url('/static/images/icons/icon-client-default.webp');
+}
+
+.icon-client.is-gmail {
+  background-image: url('/static/images/icons/icon-client-gmail.webp'), url('/static/images/icons/icon-client-default.webp');
+}
+
+.icon-client.is-apple {
+  background-image: url('/static/images/icons/icon-client-apple.webp'), url('/static/images/icons/icon-client-default.webp');
+}
+
+.icon-client.is-yahoo {
+  background-image: url('/static/images/icons/icon-client-yahoo.webp'), url('/static/images/icons/icon-client-default.webp');
+}

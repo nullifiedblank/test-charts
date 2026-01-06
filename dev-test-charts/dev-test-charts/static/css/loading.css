@@ -1,0 +1,37 @@
+.loading {
+  background: var(--color-white);
+  z-index: 1;
+  width: 100%;
+  min-height: 40px;
+  height: 100%;
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: .5s all ease-in-out;
+}
+
+.loading:after {
+  content: '';
+  background: url('/static/images/icons/icon-is-filter.svg') center no-repeat;
+  width: 30px;
+  height: 30px;
+  animation: rotate 2s linear infinite;
+}
+
+.loading.htmx-request {
+  animation: loadingClick 0.3s ease-in-out;
+  opacity: .9;
+}
+
+@keyframes loadingClick {
+  0%   { opacity: 0 }
+  100% { opacity: .9 }
+}
+
+@keyframes rotate {
+  0%   { transform: rotate(0deg) }
+  100% { transform: rotate(360deg) }
+}

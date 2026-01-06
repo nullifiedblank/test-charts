@@ -1,0 +1,27 @@
+<button class="button is-ribbon is-filter" data-open="false">Filters</button>
+<div class="drop" data-chart-filters="events">
+  <p class="drop-header">Filter by event</p>
+
+  <form class="drop-search">
+    <input type="search" placeholder="Search for event type">
+    <button>Search</button>
+  </form>
+
+  <ul class="drop-main">
+    <li class="toggle-all"><label><input type="checkbox" name="toggle_all"> Select all</label></li>
+    <li><label><input type="checkbox" name="filter_processed" class="gray" checked> Email processed</label></li>
+    <li><label><input type="checkbox" name="filter_soft" class="yellow" checked> Soft bounced</label></li>
+    <li><label><input type="checkbox" name="filter_hard" class="mustard" checked> Hard bounced</label></li>
+    <li><label><input type="checkbox" name="filter_rejected" class="burgundy" checked> Rejected</label></li>
+    <li><label><input type="checkbox" name="filter_spam" class="red" checked> Marked as spam</label></li>
+    <li><label><input type="checkbox" name="filter_delivered" class="teal" checked> Delivered to recipient</label></li>
+    <li><label><input type="checkbox" name="filter_unsubscribed" class="blue" checked> Recipient unsubscribed</label></li>
+    <li><label><input type="checkbox" name="filter_resubscribed" class="slate" checked> Recipient resubscribed</label></li>
+    <li><label><input type="checkbox" name="filter_opened" class="green" checked> Opened by recipient</label></li>
+    <li><label><input type="checkbox" name="filter_clicked" class="purple" checked> Link clicked by recipient</label></li>
+  </ul>
+
+  <div class="drop-footer">
+    <button class="button is-secondary" disabled>Apply</button>
+  </div>
+</div>

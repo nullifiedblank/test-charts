@@ -1,0 +1,26 @@
+<section class="panel-content">
+
+  <!-- Panel ribbon -->
+  <ul class="ribbon">
+
+    <li id="ribbon-filters">
+      <button 
+        class="button is-ribbon is-filter" 
+        hx-get="templates/partials/dropdowns/charts-filters.html" 
+        hx-trigger="load" 
+        hx-swap="outerHTML"
+      >Filters</button>
+    </li>
+
+    <li>
+      <p>Data is in UTC timezone</p>
+    </li>
+  </ul>
+
+  <!-- Chart -->
+  <section class="chart-wrapper">
+    <div class="chart is-events">
+      <canvas id="chart-events"></canvas>
+    </div>
+  </section>
+</section>

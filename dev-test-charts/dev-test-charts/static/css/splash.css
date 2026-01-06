@@ -1,0 +1,140 @@
+/* splash inside a panel */
+
+.panel-splash,
+.panel-form-rendered {
+  padding: 18px;
+}
+
+.panel-form-rendered {
+  overflow-y: auto;
+  max-height: calc(100vh - 340px);
+}
+
+.panel-splash-dashed {
+  border: 2px dashed var(--color-blue-201);
+  border-radius: 10px;
+  background: #FBFDFF;
+  text-align: center;
+  padding: 60px 18px;
+  transition: all .1s ease-in-out;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.panel-splash-dashed.is-uploading {
+  background: var(--color-white);
+}
+
+.panel-splash-dashed.is-dragover {
+  border-color: var(--color-blue-301);
+  transition-duration: .5s
+}
+
+.panel-splash-dashed p {
+  margin: 0 auto 24px;
+  font-family: var(--font-body);
+  font-style: normal;
+  font-weight: var(--font-weight-normal);
+  font-size: 15px;
+  line-height: 19px;
+  color: var(--color-gray-106);
+  margin-top: 5px;
+  max-width: 600px;
+}
+
+.panel-splash-dashed h3 {
+  color: var(--app-color-header);
+  font-weight: 500;
+  white-space: nowrap;
+  margin-bottom: 14px;
+}
+
+.splash-figure-supressions {
+  position: relative;
+  height: 94px;
+}
+
+.splash-figure-supressions img {
+  width: 88px;
+  position: absolute;
+  left: calc(50% - 44px);
+  top: -16px;
+  margin-left: 0;
+  margin-top: 0;
+  transition: all .3s ease-in-out;
+  transform: rotate(0deg);
+  transform-origin: 50px 80px;
+}
+
+.panel-splash-dashed .splash-figure-supressions img:nth-child(1) {
+  opacity: 0;
+}
+
+.panel-splash-dashed .splash-figure-supressions img:nth-child(2) {
+  opacity: 0;
+  transform: rotate(-5deg);
+  margin-left: 5px;
+  margin-top: -3px;
+}
+
+.panel-splash-dashed:hover .splash-figure-supressions img:nth-child(1) {
+  opacity: 1;
+  transform: rotate(-18deg);
+  margin-left: -2px;
+  margin-top: 0px;
+  transform-origin: 40px 80px;
+}
+
+.panel-splash-dashed:hover .splash-figure-supressions img:nth-child(2) {
+  opacity: 1;
+  transform: rotate(-5deg);
+  margin-left: 5px;
+  margin-top: -3px;
+}
+
+.panel-splash-dashed:hover .splash-figure-supressions img:nth-child(3) {
+  transform: rotate(10deg);
+  margin-left: 10px;
+  margin-top: 0px;
+}
+
+.upload-progress img {
+  width: 88px;
+  transition: all .3s ease-in-out;
+  z-index: 1;
+  position: relative;
+}
+
+.splash-upload {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.upload-progress {
+  position: relative;
+  overflow: hidden;
+}
+
+.upload-progress + span {
+  font-size: 14px;
+  margin-top: 10px;
+}
+
+.upload-bar {
+  position: absolute;
+  bottom: 10px;
+  left: 5px;
+  right: 5px;
+  height: 0%;
+  transition: height 800ms linear;
+  background: var(--color-teal-204);
+  z-index: 0;
+}
+
+.upload-bar.bar-full {
+  height: 100%;
+}

@@ -1,0 +1,365 @@
+/* Dropdowns */
+
+/* The main dropdown element */
+/* Closed by default */
+.drop {
+  display: flex;
+  min-width: 250px;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 0px;
+  background: #FFFFFF;
+  box-shadow: 0px 1px 1px #BECFD9, 0px 3px 5px #DEE8EE, inset 0px -1px 0px var(--color-gray-100);
+  border-radius: 10px;
+  transition: .1s all ease-in-out;
+  opacity: 0;
+  transform: translateY(0);
+  pointer-events: none;
+  position: absolute;
+  z-index: 20;
+}
+
+@media (max-width: 767px) {
+  .ribbon .drop {
+    position: absolute;
+    left: 15px;
+    width: calc(100% - 30px);
+  }
+}
+
+/* If the button data-attribute describes the button as being open,
+ * any dropdown sibling will be displayed as open */
+[data-open='true'] + .drop {
+  opacity: 1;
+  transform: translateY(5px);
+  pointer-events: auto;
+}
+
+/* Positioning for different instances of the dropdown */
+.options-container .drop,
+nav .drop,
+.panel-header-secondary .drop,
+.button.is-tertiary + .drop {
+  right: -8px;
+}
+
+.cell-options .drop {
+  right: 38px;
+  position: fixed;
+  transform: translateY(5px);
+  transition: none;
+}
+
+/* Drop header (title bit at the top) */
+.drop-header {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 13px;
+  gap: 2px;
+  border-bottom: 1px solid var(--color-gray-102);
+  border-radius: 10px 10px 0 0;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 15px;
+  line-height: 19px;
+  color: #000000;
+}
+
+.drop-header span {
+  display: block;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 13px;
+  line-height: 16px;
+  color: #818DA0;
+  white-space: normal;
+  max-width: 230px;
+}
+
+/* Drop main (all dropdown contents go in these) */
+.drop-main {
+  width: 100%;
+  max-height: calc(100vh - 448px);
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  align-items: flex-start;
+  padding: 10px 13px;
+  gap: 4px;
+  border: 0px solid var(--color-gray-102);
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 18px;
+  color: #5C697C;
+  border-bottom: 1px solid var(--color-gray-102);
+}
+
+.drop-main:last-child {
+  border-bottom: none;
+}
+
+.drop-main span {
+  font-size: 13px;
+  line-height: 1.23;
+  color: #8e9aaa;
+  padding-left: 30px;
+}
+
+.drop-main.drop-pin span {
+  margin-top: 2px;
+}
+
+/* Make each row take up the full width */
+.drop-main > li {
+  display: block;
+  width: 100%;
+  padding: 2px 0;
+  transition: .2s all ease-in-out;
+  max-height: 200px;
+  position: relative;
+}
+
+/* Hide them if filters filter them out */
+.drop-main > li[data-visible="false"] {
+  max-height: 0;
+  padding-top: 0;
+  padding-bottom: 0;
+  opacity: 0;
+  margin: -4px 0 0 0;
+  overflow: hidden;
+}
+
+/* Labels mean checks/radios, so give them horizontal space */
+.drop-main > li > label {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 2px 0px;
+  gap: 7px;
+  border: 0px solid #DEE8EE;
+  background: transparent;
+  margin: -4px -8px;
+  padding: 4px 8px;
+  border-radius: 4px;
+}
+
+.drop-main > li:has(input[type="checkbox"]) > label:hover,
+.drop-main > li:has(input[type="radio"]) > label:hover {
+  background: var(--color-gray-100);
+}
+
+/* Buttons mean not checks/radios, give them horizontal space too */
+.drop .button.is-list {
+  width: calc(100% + 10px);
+  display: block;
+  text-align: left;
+  border: 0px solid #DEE8EE;
+  background-color: transparent;
+  box-shadow: none;
+  margin: -4px -6px;
+  padding: 5px 8px 5px 36px;
+  border-radius: 4px;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 15px;
+  line-height: 18px;
+  color: var(--color-gray-107);
+  cursor: pointer;
+}
+
+.drop .button.is-list:hover {
+  background-color: var(--color-gray-100);
+}
+
+button:has(+ .support-pin) {
+  pointer-events: none;
+}
+
+/* Drop footer (closes the dropdown out with a button etc. */
+.drop-footer {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  padding: 13px;
+  gap: 10px;
+  background: var(--color-gray-100);
+  border-radius: 0 0 10px 10px;
+}
+
+/* Drop search (search row near the top below the header */
+.drop-search {
+  width: 100%;
+  position: relative;
+}
+
+.drop-search input {
+  -webkit-appearance: none;
+  appearance: none;
+  display: block;
+  width: 100%;
+  padding: 8px 13px 7px 34px;
+  background: var(--color-gray-100);
+  border: none;
+  border-bottom: 1px solid #ECF2F8;
+  color: var(--color-gray-105);
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 18px;
+}
+
+.drop-search button {
+  position: absolute;
+  top: 4px;
+  left: 3px;
+  appearance: none;
+  width: 25px;
+  text-indent: -99em;
+  overflow: hidden;
+  height: 25px;
+  border: none;
+  background: url('/static/images/icons/icon-is-search.svg') 9px 3.5px no-repeat;
+  opacity: .5;
+}
+
+.drop-search button:hover {
+  opacity: 1;
+  cursor: pointer;
+}
+
+/* Search dropdown specific bits */
+/* Check if the search area has two buttons inside
+ * If it does, we can assume the second is the dropdown
+ * and the third is the search button. If it doesn't, we
+ * can assume the button is the search button. */
+.search:has(button:nth-of-type(2)) > button:nth-of-type(1) {
+  margin-left: -30px;
+  position: relative;
+  left: -7px;
+  top: 3px;
+}
+
+/* Since the dropdown is there, we can truncate the placeholder
+ * so it doesn't have text under the icon */
+.search:has(button:nth-of-type(2)) > input {
+  padding-right: 30px;
+}
+
+/* Search is always the last ribbon option, so we can make
+ * assumptions about drop placement. */
+.search .drop {
+  transform: translateY(25px);
+}
+
+@media (min-width: 768px) {
+  
+  .search .drop {
+    right: 107px;
+    width: 370px;
+  }
+}
+
+.search [data-open="true"]+.drop {
+  transform: translateY(35px);
+}
+
+/* Search box size options */
+.search .drop li:nth-child(4) select {
+  opacity: 0;
+  max-width: 0;
+  transition: .15s all ease-in-out;
+  padding: 0;
+}
+
+.search .drop li:nth-child(4):has(input[type="text"]:focus) select,
+.search .drop li:nth-child(4):has(select:focus) select,
+.search .drop li:has(input:not(:placeholder-shown)) select {
+  opacity: 1;
+  max-width: 150px;
+  padding: 6px 25px 6px 8px;
+}
+
+.search .drop li:nth-child(4) input[type="text"] {
+  text-indent: 0;
+}
+
+.search .drop li:nth-child(4):has(input[type="text"]:focus) input[type="text"],
+.search .drop li:nth-child(4):has(select:focus) input[type="text"],
+.search .drop li:has(input:not(:placeholder-shown)) input[type="text"] {
+  text-indent: 8px;
+}
+
+/* Rows have some special formatting/styling */
+.drop-main li:has(input[type="text"]) {
+  display: flex;
+  border-bottom: 1px solid #ECF2F8;
+  padding: 3px 0 7px 0;
+}
+
+/* …apart from the last one, keep that one tight */
+.drop-main li:has(input[type="text"]):last-of-type {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+/* Keep the input fields minimal in this case */
+.drop-main li:has(input[type="text"]) input {
+  width: 100%;
+  border: none;
+  box-shadow: none;
+  padding: 0;
+  margin: 0;
+  background: transparent;
+}
+
+/* Remove margin stuff we don't need from checkboxes */
+.drop-main li:has(input[type="text"]) label {
+  margin-right: 0;
+}
+
+/* Support PIN part of the SUpport dropdown */
+.support-pin {
+  border-radius: 3px;
+  border: solid 1px var(--color-gray-112);
+  position: absolute;
+  right: 11px;
+  padding: 1px 0px 1px 4px;
+  letter-spacing: 8.5px;
+  font-family: "Fira Code Mono";
+  font-size: 15px;
+  margin-top: -1px;
+  height: 21px;
+  color: #7d8590;
+  width: 92px;
+  color: var(--color-blue-103);
+}
+
+.support-pin::after,
+.support-pin::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  border-left: solid 1px var(--color-gray-112);
+  border-right: solid 1px var(--color-gray-112);
+  height: 100%;
+  width: 18px;
+  pointer-events: none;
+}
+
+.support-pin::before {
+  left: 18px;
+}
+
+.support-pin::after {
+  right: 18px;
+}
+
+.drop-main.drop-pin {
+  background: var(--color-gray-090);
+  border-radius: 0 0 10px 10px;
+}

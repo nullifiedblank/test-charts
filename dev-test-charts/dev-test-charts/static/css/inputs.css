@@ -1,0 +1,515 @@
+/* Input fields */
+input[type="text"] {
+  display: inline-block;
+  padding: 6px 6px 6px 0;
+  text-indent: 8px;
+  background: var(--color-white);
+  box-shadow: 0 0 0 0 rgba(1, 162, 238, 0), inset 0px 2px 1px var(--color-gray-100);
+  border-radius: 5px;
+  border: 1px solid #DEE8EE;
+  border-top: 1px solid #BECFD9;
+  color: var(--color-gray-106);
+  transition: .05s all ease-in-out;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 15px;
+}
+
+input[type="text"]:hover {
+  border-color: var(--color-blue-201);
+  border-top-color: var(--color-blue-202);
+}
+
+input[type="text"]:focus {
+  border-color: var(--color-blue-300);
+  box-shadow: 0px 0px 0px 3px rgba(1, 162, 238, 0.2), inset 0px 1px 0px rgba(1, 162, 238, 0.2);
+}
+
+::placeholder {
+  color: var(--color-gray-104);
+}
+
+textarea {
+  display: inline-block;
+  padding: 6px 8px;
+  text-indent: 0;
+  background: var(--color-white);
+  box-shadow: 0 0 0 0 rgba(1, 162, 238, 0), inset 0px 2px 1px var(--color-gray-100);
+  border-radius: 5px;
+  border: 1px solid #DEE8EE;
+  border-top: 1px solid #BECFD9;
+  color: var(--color-gray-106);
+  transition: .05s all ease-in-out;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 15px;
+}
+
+textarea:hover {
+  border-color: var(--color-blue-201);
+  border-top-color: var(--color-blue-202);
+}
+
+textarea:focus {
+  border-color: var(--color-blue-300);
+  box-shadow: 0px 0px 0px 3px rgba(1, 162, 238, 0.2), inset 0px 1px 0px rgba(1, 162, 238, 0.2);
+}
+
+input[type="date"],
+input[type="datetime-local"] {
+  display: inline-block;
+  height: 33px;
+  padding: 5px 8px 5px 6px;
+  background: var(--color-white);
+  box-shadow: 0 0 0 0 rgba(1, 162, 238, 0), inset 0px 2px 1px var(--color-gray-100);
+  border: 1px solid #DEE8EE;
+  border-top: 1px solid #BECFD9;
+  border-radius: 5px;
+  color: var(--color-gray-106);
+  transition: .05s all ease-in-out;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 1.4;
+  appearance: none;
+  -webkit-appearance: none;
+  /* Remove default iOS styling */
+  display: flex;
+  align-items: center;
+  /* Flexbox centering */
+  width: calc(100% - 22px);
+  text-align: left;
+}
+
+input[type="date"]:hover,
+input[type="datetime-local"]:hover {
+  border-color: var(--color-blue-201);
+  border-top-color: var(--color-blue-202);
+}
+
+input[type="date"]:focus,
+input[type="datetime-local"]:focus {
+  border-color: var(--color-blue-300);
+  box-shadow: 0px 0px 0px 3px rgba(1, 162, 238, 0.2), inset 0px 1px 0px rgba(1, 162, 238, 0.2);
+}
+
+li.datetime {
+  padding: 0;
+  opacity: 0;
+  max-height: 0;
+  overflow: hidden;
+  transition: .25s all ease-in-out;
+}
+
+li.datetime label:nth-of-type(2) {
+  margin-top: 5px;
+}
+
+#ribbon-date .drop-main:has(.datetime) li:nth-child(5):has(input:checked)+.datetime {
+  opacity: 1;
+  max-height: 400px;
+  margin: -3px 0 2px 19px;
+  padding: 3px;
+}
+
+input[type="checkbox"] {
+  appearance: none !important;
+  -webkit-appearance: none !important;
+  width: 15px;
+  height: 15px;
+  background: var(--color-white);
+  border: 1px solid #DEE8EE;
+  border-bottom-color: #BECFD9;
+  border-radius: 3px;
+  position: relative;
+  background-position: 4px 4px;
+  background-size: 0;
+  background-repeat: no-repeat;
+  transition: .1s all ease-in-out;
+  margin: 0;
+  padding: 0;
+}
+
+input[type="checkbox"]:checked {
+  background-color: #01A2EE;
+  border: 1px solid #008DD6;
+  background-image: url('/static/images/icons/icon-is-check-white.svg');
+  background-size: 15px;
+  background-position: -1px -0.75px;
+}
+
+/* The "Select All" checkbox */
+.drop-main:has(input[type="checkbox"]) li:first-child label {
+  color: var(--color-blue-203);
+  font-weight: 500;
+}
+
+input[type="checkbox"].gray:checked,
+input[type="radio"].gray,
+input[type="radio"].gray:checked {
+  background-color: var(--color-gray-105);
+  border-color: var(--color-gray-106)
+}
+
+input[type="checkbox"].yellow:checked,
+input[type="radio"].yellow,
+input[type="radio"].yellow:checked {
+  background-color: var(--color-yellow-300);
+  border-color: var(--color-yellow-301)
+}
+
+input[type="checkbox"].mustard:checked,
+input[type="radio"].mustard,
+input[type="radio"].mustard:checked {
+  background-color: var(--color-mustard-300);
+  border-color: var(--color-mustard-301)
+}
+
+input[type="checkbox"].burgundy:checked,
+input[type="radio"].burgundy,
+input[type="radio"].burgundy:checked {
+  background-color: var(--color-burgundy-300);
+  border-color: var(--color-burgundy-301)
+}
+
+input[type="checkbox"].red:checked,
+input[type="radio"].red,
+input[type="radio"].red:checked {
+  background-color: var(--color-red-300);
+  border-color: var(--color-red-301)
+}
+
+input[type="checkbox"].teal:checked,
+input[type="radio"].teal,
+input[type="radio"].teal:checked {
+  background-color: var(--color-teal-300);
+  border-color: var(--color-teal-301)
+}
+
+input[type="checkbox"].blue:checked,
+input[type="radio"].blue,
+input[type="radio"].blue:checked {
+  background-color: var(--color-blue-300);
+  border-color: var(--color-blue-301)
+}
+
+input[type="checkbox"].slate:checked,
+input[type="radio"].slate,
+input[type="radio"].slate:checked {
+  background-color: var(--color-slate-300);
+  border-color: var(--color-slate-301)
+}
+
+input[type="checkbox"].green:checked,
+input[type="radio"].green,
+input[type="radio"].green:checked {
+  background-color: var(--color-green-300);
+  border-color: var(--color-green-301)
+}
+
+input[type="checkbox"].purple:checked,
+input[type="radio"].purple,
+input[type="radio"].purple:checked {
+  background-color: var(--color-purple-300);
+  border-color: var(--color-purple-301)
+}
+
+input[type="radio"] {
+  appearance: none !important;
+  -webkit-appearance: none !important;
+  background: gray;
+  border-radius: 100px;
+  width: 15px;
+  height: 15px;
+  background: var(--color-white);
+  border: 1px solid #DEE8EE;
+  border-bottom-color: #BECFD9;
+  position: relative;
+  background-position: 4px 4px;
+  background-size: 0;
+  background-repeat: no-repeat;
+  transition: .1s all ease-in-out;
+  margin: 0;
+  padding: 0;
+}
+
+input[type="radio"]:after {
+  content: '';
+  display: block;
+  width: 5px;
+  height: 5px;
+  background: var(--color-white);
+  border-radius: 100px;
+  transform: translate(4px, 4px) scale(0);
+  transition: .1s all ease-in-out;
+}
+
+input[type="radio"]:checked {
+  background-color: #01A2EE;
+  border: 1px solid #008DD6;
+}
+
+input[type="radio"]:checked:after {
+  transform: translate(4px, 4px) scale(1);
+}
+
+/* Standard select dropdowns (the not-cute kind) */
+select {
+  appearance: none;
+  -webkit-appearance: none;
+  padding: 6px 25px 6px 8px;
+  background: var(--color-white) url('../images/icons/icon-is-down.svg') right 7px center no-repeat;
+  border-radius: 5px;
+  border: 1px solid #DEE8EE;
+  border-bottom: 1px solid #BECFD9;
+  color: var(--color-gray-106);
+  transition: .05s all ease-in-out;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 15px;
+}
+
+/* Select dropdowns (but cute) */
+.select:before {
+  content: attr(data-selection);
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 6px 8px;
+  gap: 6px;
+  background: var(--color-white) url('../images/icons/icon-is-down.svg') right 7px center no-repeat;
+  border-radius: 5px;
+  border: 1px solid #DEE8EE;
+  border-bottom: 1px solid #BECFD9;
+}
+
+/* Make them full-width if they're inside a drop (eg from ribbon) */
+.drop .select {
+  width: 100%
+}
+
+.select[data-open="true"]:before {
+  border-color: var(--color-blue-300);
+  box-shadow: 0px 0px 0px 3px rgba(1, 162, 238, 0.2), inset 0px -1px 0px rgba(1, 162, 238, 0.2);
+}
+
+.select:hover:before {
+  border-color: var(--color-blue-201);
+  border-bottom-color: var(--color-blue-202);
+}
+
+/* The pop-out list of options within cute select dropdowns
+ * Closed by default, opens in the next rule below */
+.select .options {
+  position: absolute;
+  padding: 10px;
+  width: 290px;
+  padding: 0px;
+  background: var(--color-white);
+  box-shadow: 0px 1px 1px #BECFD9, 0px 3px 5px #DEE8EE, inset 0px -1px 0px var(--color-gray-100);
+  border-radius: 10px;
+  transition: .1s all ease-in-out;
+  opacity: 0;
+  transform: translate(15px, -30px) scale(.98);
+  position: absolute;
+  z-index: 2;
+  pointer-events: none;
+}
+
+/* Make it visible if the select is open */
+.select[data-open="true"] .options {
+  transform: translate(15px, -26px);
+  pointer-events: auto;
+  z-index: 1;
+  opacity: 1;
+}
+
+/* Individual labels within the select's options */
+.select .options label {
+  color: var(--color-gray-108);
+  font-weight: 500;
+  padding: 10px;
+  display: block;
+  border-radius: 5px;
+  margin: 0 4px 4px;
+}
+
+/* Extra spacing things if the label has a radio inside */
+.select .options label:has(input) {
+  padding-left: 30px
+}
+
+/* Give some space at the top of the first one */
+.select .options li:first-child label {
+  margin-top: 4px
+}
+
+/* Make the 'select' item visible on the page using a
+ * sweet-sweet pseudo-element */
+.select .options label:after {
+  content: attr(data-description);
+  white-space: normal;
+  display: block;
+  color: var(--color-gray-106);
+  font-weight: 400;
+}
+
+/* Make the currently selected option look checked */
+.select .options li:has(input[type="radio"]:checked) label {
+  background-color: var(--color-gray-100);
+  background-image: url('/static/images/icons/icon-is-check-blue.svg');
+  background-repeat: no-repeat;
+  background-size: 18px;
+  background-position: 9px 12px;
+  color: var(--color-blue-300);
+}
+
+/* If we hover an option, give it a nice hover-tastic background */
+.select .options li:has(input[type="radio"]:checked) label:hover,
+.select .options li label:hover {
+  background-color: var(--color-blue-100);
+}
+
+/* Hide the actual radio element, since we have a check above */
+.select .options li input[type="radio"] {
+  display: none
+}
+
+/* If there are two drop-mains, limit the first in height.
+ * This is because the first is usually the tall one, and
+ * the second is a smaller dropdown type thing.
+ * It's nth-child(3) because loader,title,main1,main2.
+ * The nth-child(4) is the second main below it. */
+.drop:has(.drop-main:nth-child(4)) ul.drop-main:nth-child(3) {
+  max-height: 250px;
+  overflow-y: auto;
+  scrollbar-color: #c8d3d9 var(--color-gray-100);
+  scrollbar-width: thin;
+}
+
+.drop .drop-main:nth-child(4) .select .options {
+  bottom: 0;
+  transform: translate(15px, -10px) scale(.98);
+}
+
+.drop .drop-main:nth-child(4) .select[data-open="true"] .options {
+  transform: translate(15px, -15px);
+}
+
+/* Tags list, where filters (or something) are listed 
+ * as items within a textbox-type region */
+.tags {
+  display: inline-block;
+  padding: 6px 0;
+  text-indent: 3px;
+  background: var(--color-white);
+  box-shadow: 0 0 0 0 rgba(1, 162, 238, 0);
+  border-radius: 5px;
+  border: 1px solid #DEE8EE;
+  border-top: 1px solid #BECFD9;
+  color: var(--color-gray-106);
+  transition: .05s all ease-in-out;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 15px;
+  height: 34px;
+  width: 100%;
+}
+
+.tags li {
+  text-indent: 0;
+  padding: 5px 32px 5px 7px;
+  margin: 0;
+  border-radius: 3px;
+  position: relative;
+  top: -3px;
+  color: var(--color-white);
+  font-style: normal;
+  font-weight: 500;
+  font-size: 13px;
+  height: 26px;
+  line-height: 16px;
+  color: var(--color-white);
+  opacity: 0.9;
+  display: inline-block;
+  cursor: pointer;
+  box-shadow: inset 0 -1px 0 rgba(0, 0, 0, 0.15), inset 0 0px 0 1px rgba(0, 0, 0, .1), 0 1px 2px rgba(0, 0, 0, .1);
+}
+
+.tags li:after {
+  content: '×';
+  display: inline-block;
+  width: 25px;
+  background: rgba(0, 0, 0, .15);
+  text-align: center;
+  margin: 0 -7px -10px 7px;
+  position: absolute;
+  top: 0px;
+  border-radius: 0 2px 2px 0;
+  font-size: 18px;
+  height: 21px;
+  padding-top: 4px;
+  font-weight: 300;
+}
+
+.tag.white {
+  background-color: var(--color-white);
+  border-color: var(--color-gray-100);
+  color: var(--color-gray-106);
+  box-shadow: inset 0 -1px 0 var(--color-gray-103), inset 0 0px 0 1px var(--color-gray-102), 0 1px 2px rgba(0, 0, 0, .1);
+}
+
+.tag.white:after {
+  background: #dee8eea3;
+  color: var(--color-gray-105);
+}
+
+.tag.gray {
+  background-color: var(--color-gray-105);
+  border-color: var(--color-gray-106)
+}
+
+.tag.yellow {
+  background-color: var(--color-yellow-300);
+  border-color: var(--color-yellow-301)
+}
+
+.tag.mustard {
+  background-color: var(--color-mustard-300);
+  border-color: var(--color-mustard-301)
+}
+
+.tag.burgundy {
+  background-color: var(--color-burgundy-300);
+  border-color: var(--color-burgundy-301)
+}
+
+.tag.red {
+  background-color: var(--color-red-300);
+  border-color: var(--color-red-301)
+}
+
+.tag.teal {
+  background-color: var(--color-teal-300);
+  border-color: var(--color-teal-301)
+}
+
+.tag.blue {
+  background-color: var(--color-blue-300);
+  border-color: var(--color-blue-301)
+}
+
+.tag.slate {
+  background-color: var(--color-slate-300);
+  border-color: var(--color-slate-301)
+}
+
+.tag.green {
+  background-color: var(--color-green-300);
+  border-color: var(--color-green-301)
+}
+
+.tag.purple {
+  background-color: var(--color-purple-300);
+  border-color: var(--color-purple-301)
+}

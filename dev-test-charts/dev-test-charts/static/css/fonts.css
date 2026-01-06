@@ -1,0 +1,44 @@
+@font-face {
+  font-family: "Urania";
+  font-weight: 400;
+  src: url("../fonts/uraniareg.otf") format("opentype");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Urania";
+  font-weight: 700;
+  src: url("../fonts/uraniabol.otf") format("opentype");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Urania";
+  font-weight: 500;
+  src: url("../fonts/uraniamed.otf") format("opentype");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Fira Code Mono";
+  font-weight: 400;
+  src: url("../fonts/firacodenerdfontmono-reg.ttf") format("truetype");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Inter';
+  src: url('../fonts/Inter-VariableFont_opsz,wght.ttf') format('truetype');
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Inter';
+  src: url('../fonts/Inter-Italic-VariableFont_opsz,wght.ttf') format('truetype');
+  font-weight: 100 900;
+  font-style: italic;
+  font-display: swap;
+}
+
