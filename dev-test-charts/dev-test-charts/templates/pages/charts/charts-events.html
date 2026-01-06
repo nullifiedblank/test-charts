@@ -139,42 +139,49 @@
         transitions: {
           show: {
             animations: {
-              y: {
-                from: (ctx) => {
-                  if (ctx.chart.scales.y) {
-                    return ctx.chart.scales.y.getPixelForValue(0);
-                  }
-                  return ctx.chart.height;
-                },
+              x: {
+                from: NaN,
                 type: 'number',
-                easing: 'easeOutQuart',
-                duration: 1000
+                easing: 'linear',
+                duration: 300,
+                delay: (ctx) => {
+                  if (ctx.type !== 'data' || ctx.xStarted) {
+                    return 0;
+                  }
+                  ctx.xStarted = true;
+                  return ctx.dataIndex * 50; // Staggered delay for drawing effect
+                }
+              },
+              y: {
+                from: NaN,
+                type: 'number',
+                easing: 'linear',
+                duration: 300,
+                delay: (ctx) => {
+                  if (ctx.type !== 'data' || ctx.yStarted) {
+                    return 0;
+                  }
+                  ctx.yStarted = true;
+                  return ctx.dataIndex * 50;
+                }
               },
               opacity: {
                 from: 0,
                 to: 1,
                 easing: 'linear',
-                duration: 500
+                duration: 300,
+                 delay: (ctx) => {
+                  return ctx.dataIndex * 50;
+                }
               }
             }
           },
           hide: {
             animations: {
-              y: {
-                to: (ctx) => {
-                  if (ctx.chart.scales.y) {
-                    return ctx.chart.scales.y.getPixelForValue(0);
-                  }
-                  return ctx.chart.height;
-                },
-                type: 'number',
-                easing: 'easeInQuart',
-                duration: 1000
-              },
               opacity: {
                 to: 0,
                 easing: 'linear',
-                duration: 500
+                duration: 300
               }
             }
           }
