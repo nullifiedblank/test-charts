@@ -302,7 +302,9 @@ document.addEventListener('DOMContentLoaded', () => {
     container.querySelectorAll('.drop-main input[type="checkbox"]:not([name="toggle_all"])').forEach(cb => {
       const idx = chart.data.datasets.findIndex(ds => (ds._filterName || ds.label) === cb.name);
       if (idx !== -1) {
-        chart.setDatasetVisibility(idx, cb.checked);
+        if (chart.isDatasetVisible(idx) !== cb.checked) {
+          chart.setDatasetVisibility(idx, cb.checked);
+        }
       }
     });
     // rescale chart y-axis when filters change in order to zoom in or out to relevant data
