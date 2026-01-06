@@ -145,10 +145,9 @@
                 easing: 'linear',
                 duration: 300,
                 delay: (ctx) => {
-                  if (ctx.type !== 'data' || ctx.xStarted) {
+                  if (ctx.type !== 'data') {
                     return 0;
                   }
-                  ctx.xStarted = true;
                   return ctx.dataIndex * 50; // Staggered delay for drawing effect
                 }
               },
@@ -158,10 +157,9 @@
                 easing: 'linear',
                 duration: 300,
                 delay: (ctx) => {
-                  if (ctx.type !== 'data' || ctx.yStarted) {
+                  if (ctx.type !== 'data') {
                     return 0;
                   }
-                  ctx.yStarted = true;
                   return ctx.dataIndex * 50;
                 }
               },
@@ -170,7 +168,10 @@
                 to: 1,
                 easing: 'linear',
                 duration: 300,
-                 delay: (ctx) => {
+                delay: (ctx) => {
+                  if (ctx.type !== 'data') {
+                    return 0;
+                  }
                   return ctx.dataIndex * 50;
                 }
               }
