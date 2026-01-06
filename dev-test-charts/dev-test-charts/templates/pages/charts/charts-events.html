@@ -146,12 +146,14 @@
                   }
                   return 0;
                 },
+                type: 'number',
                 easing: 'easeOutQuart',
                 duration: 1000
               },
               opacity: {
                 from: 0,
                 to: 1,
+                easing: 'linear',
                 duration: 500
               }
             }
@@ -165,12 +167,13 @@
                   }
                   return 0;
                 },
-                easing: 'easeOutQuart',
+                type: 'number',
+                easing: 'easeInQuart',
                 duration: 1000
               },
               opacity: {
-                from: 1,
                 to: 0,
+                easing: 'linear',
                 duration: 500
               }
             }

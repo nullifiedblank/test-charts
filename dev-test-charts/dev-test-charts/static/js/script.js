@@ -306,10 +306,10 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     });
     // rescale chart y-axis when filters change in order to zoom in or out to relevant data
-    if (chart.options.scales?.y) {
-      chart.options.scales.y.min = undefined;
-      chart.options.scales.y.max = undefined;
-    }
+    // if (chart.options.scales?.y) {
+    //   chart.options.scales.y.min = undefined;
+    //   chart.options.scales.y.max = undefined;
+    // }
     chart.update();
 
     handleNavigationClick(event);
