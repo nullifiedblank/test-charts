@@ -603,6 +603,7 @@ document.addEventListener('DOMContentLoaded', () => {
         chart.options.scales.y.min = undefined;
         chart.options.scales.y.max = undefined;
       }
+      chart.reset();
       chart.update();
     });
   }
