@@ -140,7 +140,12 @@
           show: {
             animations: {
               y: {
-                from: 0,
+                from: (ctx) => {
+                  if (ctx.chart.scales.y) {
+                    return ctx.chart.scales.y.getPixelForValue(0);
+                  }
+                  return 0;
+                },
                 easing: 'easeOutQuart',
                 duration: 1000
               },
@@ -154,7 +159,12 @@
           hide: {
             animations: {
               y: {
-                to: 0,
+                to: (ctx) => {
+                  if (ctx.chart.scales.y) {
+                    return ctx.chart.scales.y.getPixelForValue(0);
+                  }
+                  return 0;
+                },
                 easing: 'easeOutQuart',
                 duration: 1000
               },
