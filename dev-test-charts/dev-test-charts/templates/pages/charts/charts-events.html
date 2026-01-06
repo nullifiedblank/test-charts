@@ -140,27 +140,20 @@
           show: {
             animations: {
               x: {
-                from: NaN,
+                from: (ctx) => {
+                  if (ctx.chart.scales.x) {
+                    return ctx.chart.scales.x.getPixelForValue(labels[0]);
+                  }
+                  return 0;
+                },
                 type: 'number',
-                easing: 'linear',
-                duration: 300,
+                easing: 'easeOutQuart',
+                duration: 500,
                 delay: (ctx) => {
                   if (ctx.type !== 'data') {
                     return 0;
                   }
-                  return ctx.dataIndex * 50; // Staggered delay for drawing effect
-                }
-              },
-              y: {
-                from: NaN,
-                type: 'number',
-                easing: 'linear',
-                duration: 300,
-                delay: (ctx) => {
-                  if (ctx.type !== 'data') {
-                    return 0;
-                  }
-                  return ctx.dataIndex * 50;
+                  return ctx.dataIndex * 30;
                 }
               },
               opacity: {
@@ -172,7 +165,7 @@
                   if (ctx.type !== 'data') {
                     return 0;
                   }
-                  return ctx.dataIndex * 50;
+                  return ctx.dataIndex * 30;
                 }
               }
             }
