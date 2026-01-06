@@ -136,12 +136,6 @@
             beginAtZero: true
           }
         },
-        animations: {
-          y: {
-            easing: 'easeOutQuart',
-            duration: 1000
-          }
-        },
         transitions: {
           show: {
             animations: {
@@ -150,7 +144,7 @@
                   if (ctx.chart.scales.y) {
                     return ctx.chart.scales.y.getPixelForValue(0);
                   }
-                  return 0;
+                  return ctx.chart.height;
                 },
                 type: 'number',
                 easing: 'easeOutQuart',
@@ -171,7 +165,7 @@
                   if (ctx.chart.scales.y) {
                     return ctx.chart.scales.y.getPixelForValue(0);
                   }
-                  return 0;
+                  return ctx.chart.height;
                 },
                 type: 'number',
                 easing: 'easeInQuart',
