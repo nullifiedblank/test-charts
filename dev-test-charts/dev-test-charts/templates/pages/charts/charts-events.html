@@ -166,6 +166,7 @@
         plugins: {
           legend: {
             position: 'bottom',
+            onClick: function(e) {},
             onHover: function(event, legendItem, legend) {
               const index = legendItem.datasetIndex;
               if (activeLegendIndex === index) return;
