@@ -67,18 +67,18 @@ document.addEventListener('DOMContentLoaded', () => {
   // Switch the first word in details view title based on mode (Add / Edit)
   const updateTitlePrefix = () => {
     if (!currentMode) return;
-  
+
     const titleElement = document.querySelector('#title h1');
     if (!titleElement) return;
-  
+
     const titleText = titleElement.textContent.trim();
     const words = titleText.split(' ');
-  
+
     if (words.length > 1) {
       words[0] = currentMode === 'add' ? 'Add' : 'Edit';
       titleElement.textContent = words.join(' ');
     }
-  
+
     currentMode = undefined; // Reset the variable after updating
   };
 
@@ -110,24 +110,24 @@ document.addEventListener('DOMContentLoaded', () => {
     document.querySelectorAll('.table-container table .button.is-icon.is-down[data-open="true"]').forEach(button => {
       const drop = button.nextElementSibling;
       if (!drop || !drop.classList.contains('drop')) return;
-  
+
       // Ensure dropdown is initially hidden before positioning
       drop.style.visibility = 'hidden';
       drop.style.opacity = '0';
-  
+
       requestAnimationFrame(() => {
         const rect = button.getBoundingClientRect();
-  
+
         drop.style.position = 'fixed';
         drop.style.top = `${rect.bottom}px`;
         drop.style.right = `${window.innerWidth - rect.right - 10}px`;
         drop.style.left = 'unset';
         drop.style.zIndex = '1000';
-  
+
         // Reveal dropdown once positioned correctly
         drop.style.visibility = 'visible';
         drop.style.opacity = '1';
-  
+
         // Make sure dropdown closes on scroll
         const closeOnScroll = (event) => {
           if (drop.contains(event.target)) return; // Ignore scroll inside dropdown
@@ -136,9 +136,9 @@ document.addEventListener('DOMContentLoaded', () => {
           drop.style.opacity = '0';
           window.removeEventListener('wheel', closeOnScroll);
         };
-  
+
         window.addEventListener('wheel', closeOnScroll, { passive: true });
-  
+
         // Also close dropdown when clicking outside
         const closeOnClickOutside = (event) => {
           if (!drop.contains(event.target) && event.target !== button) {
@@ -155,12 +155,12 @@ document.addEventListener('DOMContentLoaded', () => {
             window.removeEventListener('wheel', closeOnScroll);
           }
         };
-  
+
         document.addEventListener('click', closeOnClickOutside);
       });
     });
   };
-  
+
 
   // Event delegation to handle various interactions
   document.addEventListener('click', (event) => {
@@ -190,7 +190,7 @@ document.addEventListener('DOMContentLoaded', () => {
       const isInTableCell = targetButton.closest('td.cell-options');
       const ribbon = targetButton.closest('.ribbon');
       const isMobile = window.innerWidth < 768;
-    
+
       if (isOpen) {
         targetButton.dataset.open = 'false';
         if (isInTableCell && drop?.classList.contains('drop')) {
@@ -214,7 +214,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
       }
     }
-       
+
 
     if (target.closest('.button')) {
       target.closest('.button').classList.add('was-clicked');
@@ -229,7 +229,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (target.closest('aside a')) {
       const parent = target.closest('li');
       const isCategoryHeader = parent.querySelector('ul');
-    
+
       if (isCategoryHeader) {
         parent.dataset.open = parent.dataset.open !== 'true' ? 'true' : 'false';
       } else {
@@ -275,7 +275,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const openDropdown = document.querySelector('.button[data-open="true"]');
     if (openDropdown && !target.closest('.drop') && !target.closest('.button[data-open="true"]')) {
       openDropdown.setAttribute('data-open', 'false');
-      
+
       const ribbon = openDropdown.closest('.ribbon');
       if (ribbon && window.innerWidth < 768) {
         ribbon.classList.remove('drop-opened');
@@ -294,23 +294,10 @@ document.addEventListener('DOMContentLoaded', () => {
     const applyBtn = event.target.closest('[data-chart-filters="events"] .drop-footer .button');
 
     if (!applyBtn) return;
-  
-    const container = applyBtn.closest('[data-chart-filters="events"]');
-    const chart = Chart.getChart(document.querySelector('#chart-events'));
-    if (!chart || !container) return;
-  
-    container.querySelectorAll('.drop-main input[type="checkbox"]:not([name="toggle_all"])').forEach(cb => {
-      const idx = chart.data.datasets.findIndex(ds => ds.label === cb.name);
-      if (idx !== -1) {
-        chart.setDatasetVisibility(idx, cb.checked);
-      }
-    });
-    // rescale chart y-axis when filters change in order to zoom in or out to relevant data
-    if (chart.options.scales?.y) {
-      chart.options.scales.y.min = undefined;
-      chart.options.scales.y.max = undefined;
+
+    if (window.initChartEvents) {
+      window.initChartEvents();
     }
-    chart.update();
 
     handleNavigationClick(event);
   });
@@ -321,7 +308,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Handle dropdown checkboxes
     if (target.closest('.drop')) {
       const drop = target.closest('.drop');
-  
+
       if (target.name === 'toggle_all') {
         const checkboxes = drop.querySelectorAll('.drop-main input[type="checkbox"]:not([name="toggle_all"])');
         checkboxes.forEach(cb => cb.checked = target.checked);
@@ -335,7 +322,7 @@ document.addEventListener('DOMContentLoaded', () => {
   document.addEventListener('input', (event) => {
     const drop = event.target.closest('.drop');
     if (!drop) return;
-  
+
     enableApplyButton(drop);
   });
 
@@ -353,7 +340,7 @@ document.addEventListener('DOMContentLoaded', () => {
           const searchValue = searchInput.value.toLowerCase();
           let matchFound = false;
           let anyItemHidden = false;
-        
+
           listItems.forEach(item => {
             const label = item.querySelector('label');
             const isVisible = label && label.textContent.toLowerCase().includes(searchValue);
@@ -361,7 +348,7 @@ document.addEventListener('DOMContentLoaded', () => {
             matchFound = matchFound || isVisible;
             if (!isVisible) anyItemHidden = true;
           });
-        
+
           // Handle "No matches" message
           let noMatchItem = dropMain.querySelector('.no-match');
           if (!matchFound && !noMatchItem) {
@@ -372,7 +359,7 @@ document.addEventListener('DOMContentLoaded', () => {
           } else if (matchFound && noMatchItem) {
             noMatchItem.remove();
           }
-        
+
           // Handle toggleAll visibility: if searchValue is present and any item is hidden, hide toggleAll
           toggleAll.forEach(toggle => {
             if (searchValue && anyItemHidden) {
@@ -381,7 +368,7 @@ document.addEventListener('DOMContentLoaded', () => {
               toggle.removeAttribute('data-visible');
             }
           });
-        });        
+        });
 
         dropSearchForm.addEventListener('submit', event => event.preventDefault());
       }
@@ -404,7 +391,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const setActiveLinkAndTitle = () => {
     let activeLi = document.querySelector('aside#navigation li[data-active="true"]');
     let activeLink = activeLi?.querySelector('a');
-  
+
     if (!activeLink) {
       activeLink = document.querySelector('aside#navigation a[hx-get]');
       if (activeLink) {
@@ -412,7 +399,7 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     }
   }
-  
+
 
   const handleNavigationClick = (event) => {
     const clickedLink = event.target.closest('a[hx-get]');
@@ -441,7 +428,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const optionsContainer = swappedElement.querySelector('.options-container') || document.querySelector('.options-container');
     const panelBlock = swappedElement.querySelector('.panel') || document.querySelector('.panel');
     const panelFooter = swappedElement.querySelector('.panel-footer') || document.querySelector('.panel-footer')
-    
+
     if (tableContainer && optionsContainer) {
       const hasVerticalScroll = tableContainer.scrollHeight > tableContainer.clientHeight;
       const hasHorizontalScroll = tableContainer.scrollWidth > tableContainer.clientWidth;
@@ -503,7 +490,7 @@ document.addEventListener('DOMContentLoaded', () => {
         tableContainer.classList.add('has-ribbon');
       }
     }
-  }; 
+  };
 
   // Handle labels for mobile view
   const handleLabelsForMobile = () => {
@@ -521,14 +508,14 @@ document.addEventListener('DOMContentLoaded', () => {
   const adjustCheckboxLayout = () => {
     const mobileBreakpoint = 767;
     const rows = document.querySelectorAll('tr');
-  
+
     rows.forEach(row => {
       const firstCell = row.querySelector('td:first-child');
       const hasCheckbox = firstCell && firstCell.querySelector('input[type="checkbox"]');
       const primaryCell = row.querySelector('.order-primary');
-      
+
       if (!primaryCell) return;
-  
+
       if (window.innerWidth <= mobileBreakpoint && hasCheckbox) {
         primaryCell.classList.add('has-checkbox');
       } else {
@@ -550,15 +537,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Handle chart filter toggling
   const bindChartFiltersPerComponent = (container) => {
-  
+
     // find the <canvas> inside this component
     const chartEl = container.querySelector('canvas[id]');
     if (!chartEl) return;
-  
+
     // grab the Chart.js instance
     const chart = Chart.getChart(chartEl);
     if (!chart) return;
-  
+
     // for each checkbox whose name matches a dataset label...
     container.querySelectorAll('input[type="checkbox"]').forEach(cb => {
       const idx = chart.data.datasets.findIndex(ds => ds.label === cb.name);
@@ -569,8 +556,8 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     chart.update();
-  }  
-  
+  }
+
   const setupChartFiltersIfPresent = (root = document) => {
     const components = root.querySelectorAll('.chart-component');
     components.forEach(comp => {
@@ -589,7 +576,7 @@ document.addEventListener('DOMContentLoaded', () => {
       document
         .querySelectorAll('[data-chart-filters="events"] .drop-main input[type="checkbox"]').forEach((cb) => {
           const idx = chart.data.datasets.findIndex(
-            (ds) => ds.label === cb.name
+            (ds) => (ds._filterName || ds.label) === cb.name
           );
           if (idx !== -1) {
             chart.setDatasetVisibility(idx, cb.checked);
@@ -601,6 +588,7 @@ document.addEventListener('DOMContentLoaded', () => {
         chart.options.scales.y.min = undefined;
         chart.options.scales.y.max = undefined;
       }
+      chart.reset();
       chart.update();
     });
   }
@@ -616,10 +604,10 @@ document.addEventListener('DOMContentLoaded', () => {
     if (!matchingLi) {
       return;
     }
-  
+
     document.querySelectorAll('aside#navigation li[data-active="true"]')
       .forEach(li => li.removeAttribute('data-active'));
-  
+
     matchingLi.setAttribute('data-active', 'true');
     updatePageTitle(matchingLink);
   };
@@ -712,5 +700,5 @@ document.addEventListener('DOMContentLoaded', () => {
     initializeSelectAll(event.target);
     initializeDropSearch(event.target);
     updateUsageBars();
-  });  
+  });
 });
