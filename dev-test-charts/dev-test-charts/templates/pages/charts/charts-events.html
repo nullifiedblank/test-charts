@@ -4,10 +4,10 @@
   <ul class="ribbon">
 
     <li id="ribbon-filters">
-      <button 
-        class="button is-ribbon is-filter" 
-        hx-get="templates/partials/dropdowns/charts-filters.html" 
-        hx-trigger="load" 
+      <button
+        class="button is-ribbon is-filter"
+        hx-get="templates/partials/dropdowns/charts-filters.html"
+        hx-trigger="load"
         hx-swap="outerHTML"
       >Filters</button>
     </li>
@@ -31,7 +31,7 @@
   </section>
 </section>
 <script>
-  (function() {
+  window.initChartEvents = function() {
     const ctx = document.getElementById('chart-events');
     if (!ctx) return;
 
@@ -119,6 +119,16 @@
       ]
     };
 
+    // Apply visibility based on current DOM state of checkboxes
+    data.datasets.forEach(ds => {
+      if (ds._filterName) {
+        const checkbox = document.querySelector(`input[name="${ds._filterName}"]`);
+        if (checkbox) {
+          ds.hidden = !checkbox.checked;
+        }
+      }
+    });
+
     new Chart(ctx, {
       type: 'line',
       data: data,
@@ -188,5 +198,8 @@
         }
       }
     });
-  })();
+  };
+
+  // Initialize on load
+  window.initChartEvents();
 </script>
