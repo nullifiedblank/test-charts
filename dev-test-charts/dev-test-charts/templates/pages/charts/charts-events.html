@@ -141,6 +141,8 @@
     data.datasets.forEach(ds => {
       ds._originalBorderColor = ds.borderColor;
       ds._originalBackgroundColor = ds.backgroundColor;
+      ds._originalPointBorderColor = ds.pointBorderColor;
+      ds._originalPointBackgroundColor = ds.pointBackgroundColor;
 
       if (ds._filterName) {
         const checkbox = document.querySelector(`input[name="${ds._filterName}"]`);
@@ -150,29 +152,41 @@
       }
     });
 
+    let activeLegendIndex = null;
+
     new Chart(ctx, {
       type: 'line',
       data: data,
       options: {
         responsive: true,
         maintainAspectRatio: false,
+        animation: {
+          duration: 250
+        },
         plugins: {
           legend: {
             position: 'bottom',
             onHover: function(event, legendItem, legend) {
-              const chart = legend.chart;
               const index = legendItem.datasetIndex;
+              if (activeLegendIndex === index) return;
+              activeLegendIndex = index;
+
+              const chart = legend.chart;
 
               chart.data.datasets.forEach((ds, i) => {
                 if (i === index) {
                   ds.borderColor = ds._originalBorderColor;
                   ds.backgroundColor = ds._originalBackgroundColor;
+                  ds.pointBorderColor = ds._originalPointBorderColor;
+                  ds.pointBackgroundColor = ds._originalPointBackgroundColor;
                 } else {
-                  ds.borderColor = hexToRgba(ds._originalBorderColor, 0.5);
-                  ds.backgroundColor = hexToRgba(ds._originalBackgroundColor, 0.5);
+                  ds.borderColor = hexToRgba(ds._originalBorderColor, 0.2);
+                  ds.backgroundColor = hexToRgba(ds._originalBackgroundColor, 0.2);
+                  ds.pointBorderColor = hexToRgba(ds._originalBorderColor, 0.2);
+                  ds.pointBackgroundColor = hexToRgba(ds._originalBackgroundColor, 0.2);
                 }
               });
-              chart.update('none');
+              chart.update();
 
               // Add pointer cursor
               const native = event.native;
@@ -181,13 +195,18 @@
               }
             },
             onLeave: function(event, legendItem, legend) {
+              if (activeLegendIndex === null) return;
+              activeLegendIndex = null;
+
               const chart = legend.chart;
 
               chart.data.datasets.forEach(ds => {
                 ds.borderColor = ds._originalBorderColor;
                 ds.backgroundColor = ds._originalBackgroundColor;
+                ds.pointBorderColor = ds._originalPointBorderColor;
+                ds.pointBackgroundColor = ds._originalPointBackgroundColor;
               });
-              chart.update('none');
+              chart.update();
 
               const native = event.native;
               if (native && native.target) {
