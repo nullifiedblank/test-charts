@@ -58,6 +58,13 @@
         return `rgba(${r}, ${g}, ${b}, ${alpha})`;
     };
 
+    const createGradient = (ctx, chartArea, color) => {
+      const gradient = ctx.createLinearGradient(0, chartArea.top, 0, chartArea.bottom);
+      gradient.addColorStop(0, hexToRgba(color, 0.5));
+      gradient.addColorStop(1, hexToRgba(color, 0));
+      return gradient;
+    };
+
     const labels = ['January', 'February', 'March', 'April', 'May', 'June', 'July'];
 
     const data = {
@@ -158,6 +165,11 @@
       type: 'line',
       data: data,
       options: {
+        elements: {
+          line: {
+            fill: false
+          }
+        },
         responsive: true,
         maintainAspectRatio: false,
         animation: {
@@ -176,12 +188,15 @@
 
               chart.data.datasets.forEach((ds, i) => {
                 if (i === index) {
+                  ds.fill = 'origin';
+                  ds.backgroundColor = createGradient(chart.ctx, chart.chartArea, ds._originalBorderColor);
                   ds.borderColor = ds._originalBorderColor;
-                  ds.backgroundColor = ds._originalBackgroundColor;
                   ds.pointBorderColor = ds._originalPointBorderColor;
                   ds.pointBackgroundColor = ds._originalPointBackgroundColor;
                 } else {
+                  ds.fill = false;
                   ds.borderColor = hexToRgba(ds._originalBorderColor, 0.2);
+                  // Background color doesn't matter much if fill is false, but keeping consistent
                   ds.backgroundColor = hexToRgba(ds._originalBackgroundColor, 0.2);
                   ds.pointBorderColor = hexToRgba(ds._originalBorderColor, 0.2);
                   ds.pointBackgroundColor = hexToRgba(ds._originalBackgroundColor, 0.2);
@@ -202,6 +217,7 @@
               const chart = legend.chart;
 
               chart.data.datasets.forEach(ds => {
+                ds.fill = false;
                 ds.borderColor = ds._originalBorderColor;
                 ds.backgroundColor = ds._originalBackgroundColor;
                 ds.pointBorderColor = ds._originalPointBorderColor;
