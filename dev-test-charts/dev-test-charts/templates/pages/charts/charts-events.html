@@ -59,6 +59,9 @@
     };
 
     const createGradient = (ctx, chartArea, color) => {
+      // Defensive check: if chartArea is undefined (e.g. not rendered yet), return solid color
+      if (!chartArea) return hexToRgba(color, 0.5);
+
       const gradient = ctx.createLinearGradient(0, chartArea.top, 0, chartArea.bottom);
       gradient.addColorStop(0, hexToRgba(color, 0.5));
       gradient.addColorStop(1, hexToRgba(color, 0));
@@ -151,6 +154,12 @@
       ds._originalPointBorderColor = ds.pointBorderColor;
       ds._originalPointBackgroundColor = ds.pointBackgroundColor;
 
+      // Force curves and no fill initially
+      ds.tension = 0.4;
+      ds.lineTension = 0.4; // Legacy fallback
+      ds.fill = false;
+      ds.pointRadius = 4; // Ensure points are visible
+
       if (ds._filterName) {
         const checkbox = document.querySelector(`input[name="${ds._filterName}"]`);
         if (checkbox) {
@@ -168,18 +177,21 @@
         elements: {
           line: {
             fill: false,
-            tension: 0.4
+            tension: 0.4,
+            lineTension: 0.4 // Legacy
           }
         },
         responsive: true,
         maintainAspectRatio: false,
         animation: {
-          duration: 250
+          duration: 250 // Gradual transition 0.25s
         },
         plugins: {
           legend: {
             position: 'bottom',
-            onClick: function(e) {},
+            onClick: function(e) {
+                // Prevent default click behavior
+            },
             onHover: function(event, legendItem, legend) {
               const index = legendItem.datasetIndex;
               if (activeLegendIndex === index) return;
@@ -189,18 +201,23 @@
 
               chart.data.datasets.forEach((ds, i) => {
                 if (i === index) {
-                  ds.fill = 'origin';
+                  // Active: show fill and gradient
+                  ds.fill = 'start';
                   ds.backgroundColor = createGradient(chart.ctx, chart.chartArea, ds._originalBorderColor);
                   ds.borderColor = ds._originalBorderColor;
                   ds.pointBorderColor = ds._originalPointBorderColor;
                   ds.pointBackgroundColor = ds._originalPointBackgroundColor;
+                  // Ensure full opacity
+                  ds.borderWidth = 3;
                 } else {
+                  // Inactive: reduce opacity to 20%
                   ds.fill = false;
                   ds.borderColor = hexToRgba(ds._originalBorderColor, 0.2);
-                  // Background color doesn't matter much if fill is false, but keeping consistent
+                  // Background color for points/fill
                   ds.backgroundColor = hexToRgba(ds._originalBackgroundColor, 0.2);
                   ds.pointBorderColor = hexToRgba(ds._originalBorderColor, 0.2);
                   ds.pointBackgroundColor = hexToRgba(ds._originalBackgroundColor, 0.2);
+                  ds.borderWidth = 1;
                 }
               });
               chart.update();
@@ -223,6 +240,7 @@
                 ds.backgroundColor = ds._originalBackgroundColor;
                 ds.pointBorderColor = ds._originalPointBorderColor;
                 ds.pointBackgroundColor = ds._originalPointBackgroundColor;
+                ds.borderWidth = 2; // Default width
               });
               chart.update();
 
