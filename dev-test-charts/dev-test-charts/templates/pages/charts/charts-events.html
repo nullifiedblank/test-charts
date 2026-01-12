@@ -219,7 +219,11 @@
       type: 'line',
       data: data,
       options: {
-        // Use default interaction mode (intersect: true) to avoid sticky hover outside chart
+        interaction: {
+          mode: 'nearest',
+          axis: 'x',
+          intersect: false
+        },
         elements: {
           line: {
             fill: false,
@@ -241,31 +245,21 @@
           const { left, right, top, bottom } = chart.chartArea;
           const isInside = x >= left && x <= right && y >= top && y <= bottom;
 
-          if (isInside) {
-            // Manually find nearest element in X axis, ignoring intersect
-            const nearestElements = chart.getElementsAtEventForMode(event, 'nearest', { intersect: false, axis: 'x' }, true);
+          // If inside chart area, use standard elements (which now respect intersect: false)
+          // to trigger highlight.
+          // If outside, reset.
 
-            if (nearestElements.length > 0) {
-              const index = nearestElements[0].datasetIndex;
-              // Reset legend flag since we are active in chart
-              chart._isLegendHovered = false;
-              highlightDataset(chart, index);
+          if (isInside && elements && elements.length > 0) {
+            const index = elements[0].datasetIndex;
+            // Reset legend flag since we are active in chart
+            chart._isLegendHovered = false;
+            highlightDataset(chart, index);
 
-              if (native && native.target) {
-                native.target.style.cursor = 'pointer';
-              }
-            } else {
-               // Should rare happen inside chart area
-               // But if it does, check legend flag
-               if (!chart._isLegendHovered) {
-                  resetChart(chart);
-                  if (native && native.target) {
-                     native.target.style.cursor = 'default';
-                  }
-               }
+            if (native && native.target) {
+              native.target.style.cursor = 'pointer';
             }
           } else {
-            // Outside chart area
+            // Outside chart area OR inside but no nearest element (rare with nearest mode)
             // Only reset if we are NOT hovering the legend
             if (!chart._isLegendHovered) {
                 resetChart(chart);
