@@ -168,7 +168,52 @@
       }
     });
 
-    let activeLegendIndex = null;
+    // State tracking
+    let activeDatasetIndex = null;
+
+    // Helper functions for highlighting
+    const highlightDataset = (chart, index) => {
+      if (activeDatasetIndex === index) return;
+      activeDatasetIndex = index;
+
+      chart.data.datasets.forEach((ds, i) => {
+        if (i === index) {
+          // Active: show fill and gradient
+          ds.fill = 'start';
+          ds.backgroundColor = createGradient(chart.ctx, chart.chartArea, ds._originalBorderColor);
+          ds.borderColor = ds._originalBorderColor;
+          ds.pointBorderColor = ds._originalPointBorderColor;
+          ds.pointBackgroundColor = ds._originalPointBackgroundColor;
+          // Ensure full opacity
+          ds.borderWidth = 3;
+        } else {
+          // Inactive: reduce opacity to 20%
+          ds.fill = false;
+          ds.borderColor = hexToRgba(ds._originalBorderColor, 0.2);
+          // Background color for points/fill
+          ds.backgroundColor = hexToRgba(ds._originalBackgroundColor, 0.2);
+          ds.pointBorderColor = hexToRgba(ds._originalBorderColor, 0.2);
+          ds.pointBackgroundColor = hexToRgba(ds._originalBackgroundColor, 0.2);
+          ds.borderWidth = 1;
+        }
+      });
+      chart.update();
+    };
+
+    const resetChart = (chart) => {
+      if (activeDatasetIndex === null) return;
+      activeDatasetIndex = null;
+
+      chart.data.datasets.forEach(ds => {
+        ds.fill = false;
+        ds.borderColor = ds._originalBorderColor;
+        ds.backgroundColor = ds._originalBackgroundColor;
+        ds.pointBorderColor = ds._originalPointBorderColor;
+        ds.pointBackgroundColor = ds._originalPointBackgroundColor;
+        ds.borderWidth = 2; // Default width
+      });
+      chart.update();
+    };
 
     new Chart(ctx, {
       type: 'line',
@@ -186,6 +231,28 @@
         animation: {
           duration: 250 // Gradual transition 0.25s
         },
+        onHover: function(event, elements, chart) {
+          const native = event.native;
+
+          if (elements && elements.length > 0) {
+            // Hovering over a dataset element
+            const index = elements[0].datasetIndex;
+            highlightDataset(chart, index);
+            if (native && native.target) {
+              native.target.style.cursor = 'pointer';
+            }
+          } else {
+            // Not hovering over any element
+            // Only reset if we are NOT hovering a legend item (which is handled by legend.onHover)
+            // However, chart.onHover fires for the canvas area. Legend is usually outside canvas
+            // or handled via plugins. But if we move off a point into empty space, we should reset.
+            // We need to be careful not to flicker if moving between points.
+            resetChart(chart);
+            if (native && native.target) {
+              native.target.style.cursor = 'default';
+            }
+          }
+        },
         plugins: {
           legend: {
             position: 'bottom',
@@ -194,33 +261,7 @@
             },
             onHover: function(event, legendItem, legend) {
               const index = legendItem.datasetIndex;
-              if (activeLegendIndex === index) return;
-              activeLegendIndex = index;
-
-              const chart = legend.chart;
-
-              chart.data.datasets.forEach((ds, i) => {
-                if (i === index) {
-                  // Active: show fill and gradient
-                  ds.fill = 'start';
-                  ds.backgroundColor = createGradient(chart.ctx, chart.chartArea, ds._originalBorderColor);
-                  ds.borderColor = ds._originalBorderColor;
-                  ds.pointBorderColor = ds._originalPointBorderColor;
-                  ds.pointBackgroundColor = ds._originalPointBackgroundColor;
-                  // Ensure full opacity
-                  ds.borderWidth = 3;
-                } else {
-                  // Inactive: reduce opacity to 20%
-                  ds.fill = false;
-                  ds.borderColor = hexToRgba(ds._originalBorderColor, 0.2);
-                  // Background color for points/fill
-                  ds.backgroundColor = hexToRgba(ds._originalBackgroundColor, 0.2);
-                  ds.pointBorderColor = hexToRgba(ds._originalBorderColor, 0.2);
-                  ds.pointBackgroundColor = hexToRgba(ds._originalBackgroundColor, 0.2);
-                  ds.borderWidth = 1;
-                }
-              });
-              chart.update();
+              highlightDataset(legend.chart, index);
 
               // Add pointer cursor
               const native = event.native;
@@ -229,20 +270,7 @@
               }
             },
             onLeave: function(event, legendItem, legend) {
-              if (activeLegendIndex === null) return;
-              activeLegendIndex = null;
-
-              const chart = legend.chart;
-
-              chart.data.datasets.forEach(ds => {
-                ds.fill = false;
-                ds.borderColor = ds._originalBorderColor;
-                ds.backgroundColor = ds._originalBackgroundColor;
-                ds.pointBorderColor = ds._originalPointBorderColor;
-                ds.pointBackgroundColor = ds._originalPointBackgroundColor;
-                ds.borderWidth = 2; // Default width
-              });
-              chart.update();
+              resetChart(legend.chart);
 
               const native = event.native;
               if (native && native.target) {
