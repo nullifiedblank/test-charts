@@ -170,6 +170,7 @@
 
     // State tracking
     let activeDatasetIndex = null;
+    let activeTooltipIndex = -1;
 
     // Helper functions for highlighting
     const highlightDataset = (chart, index) => {
@@ -203,6 +204,7 @@
     const resetChart = (chart) => {
       if (activeDatasetIndex === null) return;
       activeDatasetIndex = null;
+      activeTooltipIndex = -1;
 
       chart.data.datasets.forEach(ds => {
         ds.fill = false;
@@ -213,15 +215,16 @@
         ds.borderWidth = 2; // Default width
       });
       chart.update();
+      chart.tooltip.setActiveElements([], { x: 0, y: 0 });
     };
 
     const chartInstance = new Chart(ctx, {
       type: 'line',
       data: data,
       options: {
+        // Disable default interaction handling to prevent conflicts with custom line logic
         interaction: {
-          mode: 'nearest',
-          axis: 'x',
+          mode: null,
           intersect: false
         },
         elements: {
@@ -239,37 +242,98 @@
         onHover: function(event, elements, chart) {
           const native = event.native;
 
-          if (!chart.chartArea) return;
+          if (!chart.chartArea || chart._isLegendHovered) return;
 
           const { x, y } = event;
           const { left, right, top, bottom } = chart.chartArea;
           const isInside = x >= left && x <= right && y >= top && y <= bottom;
 
-          // If inside chart area, use standard elements (which now respect intersect: false)
-          // to trigger highlight.
-          // If outside, reset.
+          let found = false;
 
-          if (isInside && elements && elements.length > 0) {
-            const index = elements[0].datasetIndex;
-            // Reset legend flag since we are active in chart
-            chart._isLegendHovered = false;
-            highlightDataset(chart, index);
+          if (isInside) {
+             // Custom distance check to find closest line
+             let closestDatasetIndex = -1;
+             let minDistance = Infinity;
+             const threshold = 10; // 10px tolerance
 
+             chart.data.datasets.forEach((dataset, datasetIndex) => {
+               if (chart.isDatasetVisible(datasetIndex)) {
+                 const meta = chart.getDatasetMeta(datasetIndex);
+
+                 // Check line segments
+                 for (let i = 0; i < meta.data.length - 1; i++) {
+                   const p1 = meta.data[i];
+                   const p2 = meta.data[i+1];
+
+                   // Check if mouse X is within range (with some buffer)
+                   if (p1 && p2 && x >= p1.x && x <= p2.x) {
+                      // Calculate perpendicular distance from point (x,y) to line segment
+                      const num = Math.abs((p2.y - p1.y) * x - (p2.x - p1.x) * y + p2.x * p1.y - p2.y * p1.x);
+                      const den = Math.sqrt(Math.pow(p2.y - p1.y, 2) + Math.pow(p2.x - p1.x, 2));
+                      const dist = num / den;
+
+                      if (dist < minDistance) {
+                        minDistance = dist;
+                        closestDatasetIndex = datasetIndex;
+                      }
+                   }
+                 }
+
+                 // Also check distance to points themselves
+                 meta.data.forEach(point => {
+                    const dist = Math.sqrt(Math.pow(point.x - x, 2) + Math.pow(point.y - y, 2));
+                    if (dist < minDistance) {
+                        minDistance = dist;
+                        closestDatasetIndex = datasetIndex;
+                    }
+                 });
+               }
+             });
+
+             if (closestDatasetIndex !== -1 && minDistance <= threshold) {
+               highlightDataset(chart, closestDatasetIndex);
+               found = true;
+               if (native && native.target) {
+                 native.target.style.cursor = 'pointer';
+               }
+
+               // Manually sync tooltip to the closest point on the found dataset
+               const meta = chart.getDatasetMeta(closestDatasetIndex);
+               let closestPointIndex = -1;
+               let minPointDist = Infinity;
+               meta.data.forEach((point, index) => {
+                  const dist = Math.abs(point.x - x);
+                  if (dist < minPointDist) {
+                      minPointDist = dist;
+                      closestPointIndex = index;
+                  }
+               });
+
+               if (closestPointIndex !== -1) {
+                  // Only update if changed
+                  if (activeTooltipIndex !== closestPointIndex || activeDatasetIndex !== closestDatasetIndex) {
+                    activeTooltipIndex = closestPointIndex;
+                    chart.tooltip.setActiveElements([{
+                        datasetIndex: closestDatasetIndex,
+                        index: closestPointIndex
+                    }], { x, y });
+                  }
+               }
+             }
+          }
+
+          if (!found) {
+            resetChart(chart);
             if (native && native.target) {
-              native.target.style.cursor = 'pointer';
-            }
-          } else {
-            // Outside chart area OR inside but no nearest element (rare with nearest mode)
-            // Only reset if we are NOT hovering the legend
-            if (!chart._isLegendHovered) {
-                resetChart(chart);
-                if (native && native.target) {
-                  native.target.style.cursor = 'default';
-                }
+              native.target.style.cursor = 'default';
             }
           }
         },
         plugins: {
+          tooltip: {
+            // Disable default event listeners for tooltips so they only show via setActiveElements
+            events: []
+          },
           legend: {
             position: 'bottom',
             onClick: function(e) {
